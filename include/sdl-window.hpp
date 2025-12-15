@@ -6,7 +6,7 @@
 namespace Engine::SDL {
   class Window {
     public:
-      Window(std::pair<std::int32_t, std::int32_t> dimensions = {1600, 900});
+      explicit Window(std::pair<std::int32_t, std::int32_t> dimensions = {1600, 900});
 
       auto ptr() const noexcept -> SDL_Window*;
 
