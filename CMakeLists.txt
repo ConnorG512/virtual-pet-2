@@ -12,6 +12,7 @@ set(EXECUTABLE_NAME virtualpet2)
 set(SOURCE_FILES
   src/main.cpp
   src/sdl-window.cpp
+  src/file-io.cpp
 )
 
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
