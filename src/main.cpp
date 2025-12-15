@@ -67,7 +67,8 @@ auto main() -> int
     {
       if (event.type == SDL_EVENT_QUIT)
         is_running = false;
-      
+      else if (event.type == SDL_EVENT_KEY_DOWN)
+        current_window.resetDimentions();
     }
 
     // Main Loop.
@@ -78,6 +79,7 @@ auto main() -> int
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     SDL_GL_SwapWindow(current_window.ptr());
+
   }
 
   SDL_Quit();

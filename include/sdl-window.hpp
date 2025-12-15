@@ -9,6 +9,7 @@ namespace Engine::SDL {
       explicit Window(std::pair<std::int32_t, std::int32_t> dimensions = {1600, 900});
 
       auto ptr() const noexcept -> SDL_Window*;
+      auto resetDimentions() const noexcept -> void;
 
     private:
       std::unique_ptr<SDL_GLContextState, decltype(&SDL_GL_DestroyContext)> context_ {nullptr, &SDL_GL_DestroyContext};

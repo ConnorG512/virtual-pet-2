@@ -30,3 +30,8 @@ auto Engine::SDL::Window::ptr() const noexcept -> SDL_Window*
 {
   return window_instance_.get();
 }
+
+auto Engine::SDL::Window::resetDimentions() const noexcept -> void
+{
+  SDL_SetWindowSize(window_instance_.get(), 1600, 900);
+}
