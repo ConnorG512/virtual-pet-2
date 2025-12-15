@@ -28,8 +28,6 @@
     
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
       pkgs.libGL
-      #pkgs.xorg.libX11
-      #pkgs.xorg.libXcursor
       pkgs.mesa
       pkgs.renderdoc
     ];
