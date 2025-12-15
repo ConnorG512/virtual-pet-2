@@ -3,21 +3,6 @@
 
 #include <cstdint>
 
-namespace {
-  constexpr std::array<float, 18> rectangle
-  {
-     // first triangle
-     1.0f,  1.0f, 0.0f,
-     1.0f, -1.0f, 0.0f,
-    -1.0f,  1.0f, 0.0f,
-
-     // second triangle
-     1.0f, -1.0f, 0.0f,
-    -1.0f, -1.0f, 0.0f,
-    -1.0f,  1.0f, 0.0f
-  };
-}
-
 auto main() -> int 
 {
   Engine::SDL::Window current_window{};
@@ -41,4 +26,4 @@ auto main() -> int
   SDL_Quit();
 
   return 0;
-}
+};
