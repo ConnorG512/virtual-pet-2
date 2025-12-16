@@ -1,6 +1,6 @@
-#include "sdl-window.hpp"
+#include "engine/sdl-window.hpp"
 #include "glad/glad.h"
-#include "sdl-attributes.hpp"
+#include "engine/sdl-attributes.hpp"
 
 #include <cassert>
 #include <print>

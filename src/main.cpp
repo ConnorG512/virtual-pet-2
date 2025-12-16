@@ -1,8 +1,8 @@
-#include "errorbox.hpp"
-#include "file-object.hpp"
+#include "engine/errorbox.hpp"
+#include "engine/file-object.hpp"
 #include "glad/glad.h"
-#include "primitive-shapes.hpp"
-#include "sdl-window.hpp"
+#include "engine/primitive-shapes.hpp"
+#include "engine/sdl-window.hpp"
 
 #include <SDL3/SDL_messagebox.h>
 #include <SDL3/SDL_surface.h>
