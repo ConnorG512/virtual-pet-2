@@ -15,6 +15,7 @@ set(SOURCE_FILES
   src/engine/file-object.cpp
   src/gameplay/statistic.cpp
   src/gameplay/pet.cpp
+  src/gameplay/tick-manager.cpp
 )
 
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
