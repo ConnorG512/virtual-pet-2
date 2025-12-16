@@ -44,10 +44,7 @@ auto main() -> int {
   SDL_DestroySurface(texture_image);
   SDL_DestroySurface(converted_texture_image);
 
-  // VAO
-  std::uint32_t VAO{};
-  glGenVertexArrays(1, &VAO);
-  glBindVertexArray(VAO);
+  std::uint32_t VAO{Engine::OGL::createVao()};
 
   Engine::OGL::bindVbo<float>(Utils::BasicShapes::FULL_SCREEN_RECTANGLE);
   const auto background_vertex_shader {Engine::OGL::createShader<Engine::OGL::Shader::vertex>("src/shaders/default.vert")};

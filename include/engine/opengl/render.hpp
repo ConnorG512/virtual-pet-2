@@ -9,6 +9,7 @@
 
 namespace Engine::OGL 
 {
+  // VBO
   template <typename T>
   auto bindVbo(std::span<const T> vertex_buffer) noexcept -> void 
   {
@@ -22,6 +23,9 @@ namespace Engine::OGL
                  vertex_buffer.data(),
                  GL_STATIC_DRAW);
   };
+
+  // VAO
+  auto createVao() noexcept -> std::uint32_t;
   
   // Shader: 
   enum class Shader 
