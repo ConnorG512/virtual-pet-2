@@ -13,6 +13,7 @@ set(SOURCE_FILES
   src/main.cpp
   src/engine/sdl-window.cpp
   src/engine/file-object.cpp
+  src/gameplay/statistic.cpp
 )
 
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
