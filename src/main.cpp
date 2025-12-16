@@ -3,6 +3,7 @@
 #include "glad/glad.h"
 #include "engine/primitive-shapes.hpp"
 #include "engine/sdl-window.hpp"
+#include "engine/opengl/render.hpp"
 
 #include <SDL3/SDL_messagebox.h>
 #include <SDL3/SDL_surface.h>
@@ -48,14 +49,7 @@ auto main() -> int {
   glGenVertexArrays(1, &VAO);
   glBindVertexArray(VAO);
 
-  // VBO
-  std::uint32_t background_vbo;
-  glGenBuffers(1, &background_vbo);
-  glBindBuffer(GL_ARRAY_BUFFER, background_vbo);
-  glBufferData(GL_ARRAY_BUFFER,
-               Utils::BasicShapes::FULL_SCREEN_RECTANGLE.size() * sizeof(float),
-               Utils::BasicShapes::FULL_SCREEN_RECTANGLE.data(),
-               GL_STATIC_DRAW);
+  Engine::OGL::bindVbo<float>(Utils::BasicShapes::FULL_SCREEN_RECTANGLE);
 
   // Vertex
   std::uint32_t background_vertex_shader{glCreateShader(GL_VERTEX_SHADER)};
@@ -67,14 +61,7 @@ auto main() -> int {
       reinterpret_cast<const GLint *>(&background_vertex_file.size()));
   glCompileShader(background_vertex_shader);
 
-  // Fragment
-  std::uint32_t background_fragment_shader{glCreateShader(GL_FRAGMENT_SHADER)};
-  Engine::Utils::File background_fragment_file("src/shaders/default.frag");
-  const GLchar *background_fragment_source = reinterpret_cast<const GLchar *>(
-      background_fragment_file.GetFileData().data());
-  glShaderSource(background_fragment_shader, 1, &background_fragment_source,
-                 nullptr);
-  glCompileShader(background_fragment_shader);
+  const auto background_fragment_shader {Engine::OGL::createFragment("src/shaders/default.frag")};
 
   // Shader Program
   std::uint32_t shader_program{glCreateProgram()};
