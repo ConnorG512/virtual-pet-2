@@ -24,7 +24,6 @@ namespace Engine::ErrorBox
       ) noexcept -> std::expected<void, std::string>
   {
     assert(message != nullptr);
-    assert(window != nullptr);
 
     constexpr const char* box_title = []() consteval -> const char *
     {
@@ -38,27 +37,12 @@ namespace Engine::ErrorBox
         static_assert("Not a valid box type!");
     }();
     
-    const bool message_box_result {[&]() -> bool
-    {
-      if(window.has_value())
-      {
-      return SDL_ShowSimpleMessageBox(
-          std::to_underlying(box_type),
-          box_title,
-          message,
-          window.value()
-          );
-      }
-      else 
-      {
-      return SDL_ShowSimpleMessageBox(
-          std::to_underlying(box_type),
-          box_title,
-          message,
-          nullptr 
-          );
-      }
-    }()};
+    const bool message_box_result = SDL_ShowSimpleMessageBox(
+        std::to_underlying(box_type),
+        box_title,
+        message,
+        window.value_or(nullptr)
+        );
 
     if (!message_box_result)
       return std::unexpected("Failed to create message box!");
