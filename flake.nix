@@ -20,6 +20,7 @@
       libGL
       
       sdl3
+      sdl3-image
 
       strace 
       gef
