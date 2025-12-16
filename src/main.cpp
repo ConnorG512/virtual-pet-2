@@ -8,6 +8,7 @@
 #include <print>
 #include <SDL3_image/SDL_image.h>
 #include <SDL3/SDL_surface.h>
+#include <SDL3/SDL_messagebox.h>
 
 auto main() -> int 
 {
@@ -18,7 +19,12 @@ auto main() -> int
   SDL_Surface* texture_image {IMG_Load("assets/image/background/HomeScreen.png")};
   if (texture_image == nullptr)
   {
-    std::println("Failed to load texture image.");
+    SDL_ShowSimpleMessageBox(
+        SDL_MESSAGEBOX_ERROR , 
+        "Fatal Error!", 
+        "Failed to load texture image!", 
+        current_window.ptr()
+    );
     return -1;
   }
   std::println("Texture loaded: H{0}W{1}", texture_image->h, texture_image->w);
