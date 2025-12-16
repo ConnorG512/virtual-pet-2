@@ -23,21 +23,50 @@ namespace Engine::OGL
                  GL_STATIC_DRAW);
   };
   
-  // Shader:
-  auto createFragment(const char* file_path) noexcept -> std::uint32_t
+  // Shader: 
+  enum class Shader 
+  {
+    vertex, 
+    fragment,
+  };
+  
+  template <Engine::OGL::Shader shader_type>
+  auto createShader(const char* file_path) noexcept -> std::uint32_t
   {
     assert(file_path != nullptr);
+    
+    Engine::Utils::File shader_file(file_path);
 
-    std::uint32_t fragment_shader{glCreateShader(GL_FRAGMENT_SHADER)};
-    Engine::Utils::File background_fragment_file(file_path);
-    
-    const GLchar *background_fragment_source = reinterpret_cast<const GLchar *>(
-        background_fragment_file.GetFileData().data());
-    
-    glShaderSource(fragment_shader, 1, &background_fragment_source,
-                   nullptr);
-    glCompileShader(fragment_shader);
-    
-    return fragment_shader;
-  };
+    if constexpr (shader_type == Engine::OGL::Shader::vertex)
+    {
+      std::uint32_t shader{glCreateShader(GL_VERTEX_SHADER)};
+
+      const GLchar * shader_source = reinterpret_cast<const GLchar *>(
+          shader_file.GetFileData().data());
+      
+      glShaderSource(
+          shader, 1, &shader_source,
+          reinterpret_cast<const GLint *>(&shader_file.size()));
+
+      glCompileShader(shader);
+      return shader;
+    }
+    else if constexpr (shader_type == Engine::OGL::Shader::fragment)
+    {
+      std::uint32_t shader{glCreateShader(GL_FRAGMENT_SHADER)};
+
+      const GLchar * shader_source = reinterpret_cast<const GLchar *>(
+          shader_file.GetFileData().data());
+      
+      glShaderSource(shader, 1, &shader_source,
+                     nullptr);
+      glCompileShader(shader);
+      
+      return shader;
+    }
+    else 
+    {
+      static_assert("Invalid shader type!");
+    }
+  }
 }

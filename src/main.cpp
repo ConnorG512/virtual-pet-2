@@ -50,18 +50,8 @@ auto main() -> int {
   glBindVertexArray(VAO);
 
   Engine::OGL::bindVbo<float>(Utils::BasicShapes::FULL_SCREEN_RECTANGLE);
-
-  // Vertex
-  std::uint32_t background_vertex_shader{glCreateShader(GL_VERTEX_SHADER)};
-  Engine::Utils::File background_vertex_file("src/shaders/default.vert");
-  const GLchar *background_vertex_source = reinterpret_cast<const GLchar *>(
-      background_vertex_file.GetFileData().data());
-  glShaderSource(
-      background_vertex_shader, 1, &background_vertex_source,
-      reinterpret_cast<const GLint *>(&background_vertex_file.size()));
-  glCompileShader(background_vertex_shader);
-
-  const auto background_fragment_shader {Engine::OGL::createFragment("src/shaders/default.frag")};
+  const auto background_vertex_shader {Engine::OGL::createShader<Engine::OGL::Shader::vertex>("src/shaders/default.vert")};
+  const auto background_fragment_shader {Engine::OGL::createShader<Engine::OGL::Shader::fragment>("src/shaders/default.frag")};
 
   // Shader Program
   std::uint32_t shader_program{glCreateProgram()};
