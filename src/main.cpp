@@ -3,6 +3,7 @@
 #include "primitive-shapes.hpp"
 #include "file-object.hpp"
 #include "glad/glad.h"
+#include "errorbox.hpp"
 
 #include <cstdint>
 #include <print>
@@ -19,12 +20,10 @@ auto main() -> int
   SDL_Surface* texture_image {IMG_Load("assets/image/background/HomeScreen.png")};
   if (texture_image == nullptr)
   {
-    SDL_ShowSimpleMessageBox(
-        SDL_MESSAGEBOX_ERROR , 
-        "Fatal Error!", 
-        "Failed to load texture image!", 
+    Engine::ErrorBox::CreateErrorBox<Engine::ErrorBox::BoxType::error>(
+        "Failed to load image texture!",
         current_window.ptr()
-    );
+        );
     return -1;
   }
   std::println("Texture loaded: H{0}W{1}", texture_image->h, texture_image->w);
