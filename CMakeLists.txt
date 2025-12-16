@@ -14,6 +14,7 @@ set(SOURCE_FILES
   src/engine/sdl-window.cpp
   src/engine/file-object.cpp
   src/gameplay/statistic.cpp
+  src/gameplay/pet.cpp
 )
 
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
