@@ -1,24 +1,28 @@
-#pragma once 
+#pragma once
 
-#include <memory>
 #include <SDL3/SDL.h>
 #include <expected>
+#include <memory>
 
 namespace Engine::SDL {
-  class Window {
-    public:
-      explicit Window(std::pair<std::int32_t, std::int32_t> dimensions = {1600, 900});
+class Window {
+public:
+  explicit Window(std::pair<std::int32_t, std::int32_t> dimensions = {1600,
+                                                                      900});
 
-      auto ptr() const noexcept -> SDL_Window*;
-      auto resetDimentions() const noexcept -> void;
-      auto getCurrentDimensions() const noexcept -> std::pair<std::int32_t, std::int32_t>;
+  auto ptr() const noexcept -> SDL_Window *;
+  auto resetDimentions() const noexcept -> void;
+  auto getCurrentDimensions() const noexcept
+      -> std::pair<std::int32_t, std::int32_t>;
 
-    private:
-      auto createWindow() const noexcept -> std::expected<SDL_Window*, std::string>;
+private:
+  auto createWindow() const noexcept
+      -> std::expected<SDL_Window *, std::string>;
 
-      std::unique_ptr<SDL_GLContextState, decltype(&SDL_GL_DestroyContext)> context_ {nullptr, &SDL_GL_DestroyContext};
-      std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window_instance_{
+  std::unique_ptr<SDL_GLContextState, decltype(&SDL_GL_DestroyContext)>
+      context_{nullptr, &SDL_GL_DestroyContext};
+  std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window_instance_{
       nullptr, &SDL_DestroyWindow};
-      std::pair<std::int32_t, std::int32_t> screen_dimensions_ {1600, 900};
-  };
-}
+  std::pair<std::int32_t, std::int32_t> screen_dimensions_{1600, 900};
+};
+} // namespace Engine::SDL
