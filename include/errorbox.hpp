@@ -26,7 +26,7 @@ namespace Engine::ErrorBox
     assert(message != nullptr);
     assert(window != nullptr);
 
-    constexpr char* box_title = []() consteval -> const char *
+    constexpr const char* box_title = []() consteval -> const char *
     {
       if constexpr (box_type == Engine::ErrorBox::BoxType::error)
         return "Error:";
@@ -38,23 +38,31 @@ namespace Engine::ErrorBox
         static_assert("Not a valid box type!");
     }();
     
-    if(window.has_value())
+    const bool message_box_result {[&]() -> bool
     {
-    SDL_ShowSimpleMessageBox(
-        std::to_underlying(box_type),
-        box_title,
-        message,
-        window.value()
-        );
-    }
-    else 
-    {
-    SDL_ShowSimpleMessageBox(
-        std::to_underlying(box_type),
-        box_title,
-        message,
-        nullptr 
-        );
-    }
+      if(window.has_value())
+      {
+      return SDL_ShowSimpleMessageBox(
+          std::to_underlying(box_type),
+          box_title,
+          message,
+          window.value()
+          );
+      }
+      else 
+      {
+      return SDL_ShowSimpleMessageBox(
+          std::to_underlying(box_type),
+          box_title,
+          message,
+          nullptr 
+          );
+      }
+    }()};
+
+    if (!message_box_result)
+      return std::unexpected("Failed to create message box!");
+
+    return {};
   }
 }
