@@ -4,16 +4,15 @@
 
 namespace Utils::BasicShapes 
 {
-inline constexpr std::array<float, 18> FULL_SCREEN_RECTANGLE
+inline constexpr std::array<float, 30> FULL_SCREEN_RECTANGLE
   {
-     // first triangle
-     1.0f,  1.0f, 0.0f,
-     1.0f, -1.0f, 0.0f,
-    -1.0f,  1.0f, 0.0f,
+     // pos              // uv
+     1.0f,  1.0f, 0.0f,  1.0f, 1.0f,
+     1.0f, -1.0f, 0.0f,  1.0f, 0.0f,
+    -1.0f, -1.0f, 0.0f,  0.0f, 0.0f,
 
-     // second triangle
-     1.0f, -1.0f, 0.0f,
-    -1.0f, -1.0f, 0.0f,
-    -1.0f,  1.0f, 0.0f
+    -1.0f, -1.0f, 0.0f,  0.0f, 0.0f,
+    -1.0f,  1.0f, 0.0f,  0.0f, 1.0f,
+     1.0f,  1.0f, 0.0f,  1.0f, 1.0f,
   };
 }

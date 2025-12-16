@@ -12,7 +12,7 @@ set(EXECUTABLE_NAME virtualpet2)
 set(SOURCE_FILES
   src/main.cpp
   src/sdl-window.cpp
-  src/file-io.cpp
+  src/file-object.cpp
 )
 
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
@@ -38,8 +38,10 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug" AND UNIX AND NOT APPLE)
 endif()
 
 find_package(SDL3 REQUIRED)
+find_package(SDL3_image REQUIRED)
 target_link_libraries(${EXECUTABLE_NAME} PRIVATE
   SDL3::SDL3
+  SDL3_image
 )
 
 target_include_directories(${EXECUTABLE_NAME} PRIVATE 
