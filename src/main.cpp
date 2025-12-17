@@ -1,5 +1,6 @@
 #include "engine/errorbox.hpp"
 #include "engine/file-object.hpp"
+#include "engine/image.hpp"
 #include "glad/glad.h"
 #include "engine/primitive-shapes.hpp"
 #include "engine/sdl-window.hpp"
@@ -15,16 +16,9 @@ auto main() -> int {
   Engine::SDL::Window current_window{};
   glViewport(0, 0, current_window.getCurrentDimensions().first,
              current_window.getCurrentDimensions().second);
-
-  // Genertating a texture
-  SDL_Surface *texture_image{
-      IMG_Load("assets/image/background/HomeScreen.png")};
-  if (texture_image == nullptr) {
-    Engine::ErrorBox::CreateErrorBox<Engine::ErrorBox::BoxType::error>(
-        "Failed to load image texture!", current_window.ptr());
-    return -1;
-  }
-  std::println("Texture loaded: H{0}W{1}", texture_image->h, texture_image->w);
+  
+  Engine::Image texture_image{"assets/image/background/HomeScreen.png"};
+  std::println("Texture loaded: H{0}W{1}", texture_image.data()->h, texture_image.data()->w);
 
   GLuint texture_id{0};
   glGenTextures(1, &texture_id);
@@ -32,14 +26,11 @@ auto main() -> int {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   // glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture_image->w,
-               texture_image->h, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-               texture_image->pixels);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture_image.data()->w,
+               texture_image.data()->h, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+               texture_image.data()->pixels);
   // glGenerateMipmap(GL_TEXTURE_2D);
-
-  SDL_DestroySurface(texture_image);
-  SDL_DestroySurface(texture_image);
-
+  
   std::uint32_t VAO{Engine::OGL::createVao()};
 
   Engine::OGL::bindVbo<float>(Utils::BasicShapes::FULL_SCREEN_RECTANGLE);
