@@ -1,20 +1,19 @@
 #include "engine/file-object.hpp"
 
+#include <cassert>
 #include <format>
-#include <stdexcept>
+#include <SDL3/SDL_iostream.h>
 
-Engine::Utils::File::File(const char *file_path) {
+Engine::File::File(const char* file_path)
+{
   assert(file_path != nullptr);
+
   data_.reset(SDL_LoadFile(file_path, &size_));
-  assert(size_ > 0);
+  if (data_.get() == nullptr)
+    throw std::runtime_error(std::format("Failed to load file! Error: {}", SDL_GetError())); 
 }
 
-auto Engine::Utils::File::size() noexcept -> const std::size_t & {
-  return size_;
-}
-
-auto Engine::Utils::File::GetFileData() -> std::span<const std::uint8_t> {
-  assert(data_.get() != nullptr);
-  return std::span<const std::uint8_t>(
-      static_cast<const std::uint8_t *>(data_.get()), size_);
+auto Engine::File::GetData() noexcept -> std::span<const std::byte>
+{
+  return std::span<std::byte>( static_cast<std::byte*>(data_.get()), size_ );
 }

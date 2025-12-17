@@ -2,29 +2,25 @@
 
 #include "glad/glad.h"
 
-#include <SDL3/SDL_iostream.h>
-#include <SDL3/SDL_stdinc.h>
-#include <cassert>
-#include <concepts>
+#include <span>
 #include <cstddef>
 #include <expected>
-#include <memory>
-#include <optional>
 #include <string>
+#include <memory>
+#include <SDL3/SDL_stdinc.h>
 
-namespace Engine::Utils {
-class File {
-public:
-  File(const char *file_path);
-
-  File(File &&other) noexcept = delete;            // Move constructor.
-  File &operator=(File &&other) noexcept = delete; // Move assignment.
-
-  auto size() noexcept -> const std::size_t &;
-  auto GetFileData() -> std::span<const std::uint8_t>;
-
-private:
-  std::unique_ptr<void, decltype(&SDL_free)> data_{nullptr, &SDL_free};
-  std::size_t size_{0};
-};
-} // namespace Engine::Utils
+namespace Engine 
+{
+  class File 
+  {
+    public:
+      File(const char* file_path);
+      ~File() = default;
+      
+      auto GetData() noexcept -> std::span<const std::byte>;
+    
+    private:
+      std::unique_ptr<void, decltype(&SDL_free)> data_ {nullptr, &SDL_free}; 
+      std::size_t size_ {0};
+  };
+}

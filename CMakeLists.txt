@@ -13,6 +13,8 @@ set(SOURCE_FILES
   src/main.cpp
   src/engine/sdl-window.cpp
   src/engine/file-object.cpp
+  src/engine/image.cpp
+  src/engine/opengl/render.cpp
   src/gameplay/statistic.cpp
   src/gameplay/pet.cpp
   src/gameplay/tick-manager.cpp

@@ -1,8 +1,10 @@
 #include "engine/errorbox.hpp"
 #include "engine/file-object.hpp"
+#include "engine/image.hpp"
 #include "glad/glad.h"
 #include "engine/primitive-shapes.hpp"
 #include "engine/sdl-window.hpp"
+#include "engine/opengl/render.hpp"
 
 #include <SDL3/SDL_messagebox.h>
 #include <SDL3/SDL_surface.h>
@@ -14,20 +16,9 @@ auto main() -> int {
   Engine::SDL::Window current_window{};
   glViewport(0, 0, current_window.getCurrentDimensions().first,
              current_window.getCurrentDimensions().second);
-
-  // Genertating a texture
-  SDL_Surface *texture_image{
-      IMG_Load("assets/image/background/HomeScreen.png")};
-  if (texture_image == nullptr) {
-    Engine::ErrorBox::CreateErrorBox<Engine::ErrorBox::BoxType::error>(
-        "Failed to load image texture!", current_window.ptr());
-    return -1;
-  }
-  std::println("Texture loaded: H{0}W{1}", texture_image->h, texture_image->w);
-
-  // Converting the image colour format:
-  SDL_Surface *converted_texture_image{
-      SDL_ConvertSurface(texture_image, SDL_PIXELFORMAT_RGBA32)};
+  
+  Engine::Image texture_image{"assets/image/background/HomeScreen.png"};
+  std::println("Texture loaded: H{0}W{1}", texture_image.data()->h, texture_image.data()->w);
 
   GLuint texture_id{0};
   glGenTextures(1, &texture_id);
@@ -35,57 +26,19 @@ auto main() -> int {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   // glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, converted_texture_image->w,
-               converted_texture_image->h, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-               converted_texture_image->pixels);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture_image.data()->w,
+               texture_image.data()->h, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+               texture_image.data()->pixels);
   // glGenerateMipmap(GL_TEXTURE_2D);
+  
+  std::uint32_t VAO{Engine::OGL::createVao()};
 
-  SDL_DestroySurface(texture_image);
-  SDL_DestroySurface(converted_texture_image);
-
-  // VAO
-  std::uint32_t VAO{};
-  glGenVertexArrays(1, &VAO);
-  glBindVertexArray(VAO);
-
-  // VBO
-  std::uint32_t background_vbo;
-  glGenBuffers(1, &background_vbo);
-  glBindBuffer(GL_ARRAY_BUFFER, background_vbo);
-  glBufferData(GL_ARRAY_BUFFER,
-               Utils::BasicShapes::FULL_SCREEN_RECTANGLE.size() * sizeof(float),
-               Utils::BasicShapes::FULL_SCREEN_RECTANGLE.data(),
-               GL_STATIC_DRAW);
-
-  // Vertex
-  std::uint32_t background_vertex_shader{glCreateShader(GL_VERTEX_SHADER)};
-  Engine::Utils::File background_vertex_file("src/shaders/default.vert");
-  const GLchar *background_vertex_source = reinterpret_cast<const GLchar *>(
-      background_vertex_file.GetFileData().data());
-  glShaderSource(
-      background_vertex_shader, 1, &background_vertex_source,
-      reinterpret_cast<const GLint *>(&background_vertex_file.size()));
-  glCompileShader(background_vertex_shader);
-
-  // Fragment
-  std::uint32_t background_fragment_shader{glCreateShader(GL_FRAGMENT_SHADER)};
-  Engine::Utils::File background_fragment_file("src/shaders/default.frag");
-  const GLchar *background_fragment_source = reinterpret_cast<const GLchar *>(
-      background_fragment_file.GetFileData().data());
-  glShaderSource(background_fragment_shader, 1, &background_fragment_source,
-                 nullptr);
-  glCompileShader(background_fragment_shader);
-
-  // Shader Program
-  std::uint32_t shader_program{glCreateProgram()};
-  glAttachShader(shader_program, background_vertex_shader);
-  glAttachShader(shader_program, background_fragment_shader);
-  glLinkProgram(shader_program);
-  glUseProgram(shader_program);
-
-  glDeleteShader(background_vertex_shader);
-  glDeleteShader(background_fragment_shader);
-
+  Engine::OGL::bindVbo<float>(Utils::BasicShapes::FULL_SCREEN_RECTANGLE);
+  std::uint32_t shader_program {Engine::OGL::createProgram(Engine::OGL::ProgramProperties{
+      .vertex_shader_path="src/shaders/default.vert",
+      .fragment_shader_path="src/shaders/default.frag",
+  })};
+  
   // Layout 0: Colour:
   glVertexAttribPointer(0, // Layout num
                         3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
