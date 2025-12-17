@@ -39,8 +39,6 @@ namespace Engine::OGL
   {
     const char* vertex_shader_path {};
     const char* fragment_shader_path {};
-    std::uint32_t vertex_shader{};
-    std::uint32_t fragment_shader{};
   };
   auto createProgram(const ProgramProperties& properties) noexcept -> std::uint32_t;
   auto attachAndLinkToProgram(std::uint32_t program, std::vector<std::uint32_t> shader_list) noexcept -> void;
