@@ -52,13 +52,11 @@ auto main() -> int {
 
   // Shader Program
   std::uint32_t shader_program{glCreateProgram()};
-  glAttachShader(shader_program, background_vertex_shader);
-  glAttachShader(shader_program, background_fragment_shader);
-  glLinkProgram(shader_program);
+
+  Engine::OGL::attachAndLinkToProgram(shader_program, {background_vertex_shader, background_fragment_shader});
   glUseProgram(shader_program);
 
-  glDeleteShader(background_vertex_shader);
-  glDeleteShader(background_fragment_shader);
+  Engine::OGL::deleteShaders({background_vertex_shader, background_fragment_shader});
 
   // Layout 0: Colour:
   glVertexAttribPointer(0, // Layout num

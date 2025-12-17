@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <span>
 #include <cassert>
+#include <vector>
 
 namespace Engine::OGL 
 {
@@ -22,7 +23,7 @@ namespace Engine::OGL
                  vertex_buffer.size() * sizeof(T),
                  vertex_buffer.data(),
                  GL_STATIC_DRAW);
-  };
+  }
 
   // VAO
   auto createVao() noexcept -> std::uint32_t;
@@ -73,4 +74,8 @@ namespace Engine::OGL
       static_assert("Invalid shader type!");
     }
   }
+
+  auto attachAndLinkToProgram(std::uint32_t program, std::vector<std::uint32_t> shader_list) noexcept -> void;
+
+  auto deleteShaders(std::vector<std::uint32_t> shader_list) noexcept -> void;
 }
