@@ -35,47 +35,14 @@ namespace Engine::OGL
     fragment,
   };
   
-  template <Engine::OGL::Shader shader_type>
-  auto createShader(const char* file_path) noexcept -> std::uint32_t
+  struct ProgramProperties 
   {
-    assert(file_path != nullptr);
-    
-    Engine::Utils::File shader_file(file_path);
-
-    if constexpr (shader_type == Engine::OGL::Shader::vertex)
-    {
-      std::uint32_t shader{glCreateShader(GL_VERTEX_SHADER)};
-
-      const GLchar * shader_source = reinterpret_cast<const GLchar *>(
-          shader_file.GetFileData().data());
-      
-      glShaderSource(
-          shader, 1, &shader_source,
-          reinterpret_cast<const GLint *>(&shader_file.size()));
-
-      glCompileShader(shader);
-      return shader;
-    }
-    else if constexpr (shader_type == Engine::OGL::Shader::fragment)
-    {
-      std::uint32_t shader{glCreateShader(GL_FRAGMENT_SHADER)};
-
-      const GLchar * shader_source = reinterpret_cast<const GLchar *>(
-          shader_file.GetFileData().data());
-      
-      glShaderSource(shader, 1, &shader_source,
-                     nullptr);
-      glCompileShader(shader);
-      
-      return shader;
-    }
-    else 
-    {
-      static_assert("Invalid shader type!");
-    }
-  }
-
+    const char* vertex_shader_path {};
+    const char* fragment_shader_path {};
+    std::uint32_t vertex_shader{};
+    std::uint32_t fragment_shader{};
+  };
+  auto createProgram(const ProgramProperties& properties) noexcept -> std::uint32_t;
   auto attachAndLinkToProgram(std::uint32_t program, std::vector<std::uint32_t> shader_list) noexcept -> void;
-
   auto deleteShaders(std::vector<std::uint32_t> shader_list) noexcept -> void;
 }

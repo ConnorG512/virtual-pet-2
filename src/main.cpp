@@ -47,16 +47,12 @@ auto main() -> int {
   std::uint32_t VAO{Engine::OGL::createVao()};
 
   Engine::OGL::bindVbo<float>(Utils::BasicShapes::FULL_SCREEN_RECTANGLE);
-  const auto background_vertex_shader {Engine::OGL::createShader<Engine::OGL::Shader::vertex>("src/shaders/default.vert")};
-  const auto background_fragment_shader {Engine::OGL::createShader<Engine::OGL::Shader::fragment>("src/shaders/default.frag")};
-
-  // Shader Program
-  std::uint32_t shader_program{glCreateProgram()};
-
-  Engine::OGL::attachAndLinkToProgram(shader_program, {background_vertex_shader, background_fragment_shader});
-  glUseProgram(shader_program);
-
-  Engine::OGL::deleteShaders({background_vertex_shader, background_fragment_shader});
+  std::uint32_t shader_program {Engine::OGL::createProgram(Engine::OGL::ProgramProperties{
+      .vertex_shader_path="src/shaders/default.vert",
+      .fragment_shader_path="src/shaders/default.frag",
+  })};
+  
+  //Engine::OGL::deleteShaders({background_vertex_shader, background_fragment_shader});
 
   // Layout 0: Colour:
   glVertexAttribPointer(0, // Layout num
