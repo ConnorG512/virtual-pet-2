@@ -26,23 +26,19 @@ auto main() -> int {
   }
   std::println("Texture loaded: H{0}W{1}", texture_image->h, texture_image->w);
 
-  // Converting the image colour format:
-  SDL_Surface *converted_texture_image{
-      SDL_ConvertSurface(texture_image, SDL_PIXELFORMAT_RGBA32)};
-
   GLuint texture_id{0};
   glGenTextures(1, &texture_id);
   glBindTexture(GL_TEXTURE_2D, texture_id);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   // glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, converted_texture_image->w,
-               converted_texture_image->h, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-               converted_texture_image->pixels);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture_image->w,
+               texture_image->h, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+               texture_image->pixels);
   // glGenerateMipmap(GL_TEXTURE_2D);
 
   SDL_DestroySurface(texture_image);
-  SDL_DestroySurface(converted_texture_image);
+  SDL_DestroySurface(texture_image);
 
   std::uint32_t VAO{Engine::OGL::createVao()};
 
