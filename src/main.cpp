@@ -58,8 +58,12 @@ auto main() -> int {
     while (SDL_PollEvent(&event)) {
       if (event.type == SDL_EVENT_QUIT)
         is_running = false;
-      else if (event.type == SDL_EVENT_KEY_DOWN)
-        current_window.resetDimentions();
+      else if (event.type == SDL_EVENT_KEY_DOWN) {
+        if (event.key.scancode == SDL_SCANCODE_F10)
+        {
+          current_window.resetDimentions();
+        }
+      }
       else if (event.type == SDL_EVENT_WINDOW_RESIZED) {
         int w{0};
         int h{0};
