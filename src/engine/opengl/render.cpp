@@ -31,7 +31,7 @@ auto Engine::OGL::createProgram(const Engine::OGL::ProgramProperties& properties
       ); 
 
   const GLchar* fragment_source {
-    reinterpret_cast<const GLchar*>(reinterpret_cast<const GLchar*>(fragment_file.GetData().data()))};
+    reinterpret_cast<const GLchar*>(fragment_file.GetData().data())};
   glShaderSource( 
       shaders.at(1),
       1,
