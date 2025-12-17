@@ -52,8 +52,6 @@ auto main() -> int {
       .fragment_shader_path="src/shaders/default.frag",
   })};
   
-  //Engine::OGL::deleteShaders({background_vertex_shader, background_fragment_shader});
-
   // Layout 0: Colour:
   glVertexAttribPointer(0, // Layout num
                         3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);

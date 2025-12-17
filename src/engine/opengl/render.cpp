@@ -46,13 +46,9 @@ auto Engine::OGL::createProgram(const Engine::OGL::ProgramProperties& properties
     glAttachShader(program, shader);
 
   glLinkProgram(program);
-  return program;
-}
 
-auto Engine::OGL::deleteShaders(std::vector<std::uint32_t> shader_list) noexcept -> void
-{
-  for(const auto shader : shader_list) 
-  {
+  for(const auto shader : shaders)
     glDeleteShader(shader);
-  }
+
+  return program;
 }
