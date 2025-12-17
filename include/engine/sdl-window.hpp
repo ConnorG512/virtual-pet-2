@@ -4,7 +4,7 @@
 #include <expected>
 #include <memory>
 
-namespace Engine::SDL {
+namespace Engine {
 class Window {
 public:
   explicit Window(std::pair<std::int32_t, std::int32_t> dimensions = {1600,

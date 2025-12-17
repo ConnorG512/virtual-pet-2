@@ -5,7 +5,7 @@
 #include <cassert>
 #include <print>
 
-Engine::SDL::Window::Window(std::pair<std::int32_t, std::int32_t> dimensions)
+Engine::Window::Window(std::pair<std::int32_t, std::int32_t> dimensions)
     : screen_dimensions_{dimensions} {
   for (const auto &[attribute, value] : ::SDL::ATTRIB_LIST) {
     SDL_GL_SetAttribute(attribute, value);
@@ -28,21 +28,21 @@ Engine::SDL::Window::Window(std::pair<std::int32_t, std::int32_t> dimensions)
   }
 }
 
-auto Engine::SDL::Window::ptr() const noexcept -> SDL_Window * {
+auto Engine::Window::ptr() const noexcept -> SDL_Window * {
   return window_instance_.get();
 }
 
-auto Engine::SDL::Window::resetDimentions() const noexcept -> void {
+auto Engine::Window::resetDimentions() const noexcept -> void {
   SDL_SetWindowSize(window_instance_.get(), screen_dimensions_.first,
                     screen_dimensions_.second);
 }
 
-auto Engine::SDL::Window::getCurrentDimensions() const noexcept
+auto Engine::Window::getCurrentDimensions() const noexcept
     -> std::pair<std::int32_t, std::int32_t> {
   return screen_dimensions_;
 }
 
-auto Engine::SDL::Window::createWindow() const noexcept
+auto Engine::Window::createWindow() const noexcept
     -> std::expected<SDL_Window *, std::string> {
   const auto [width, height] = screen_dimensions_;
 
