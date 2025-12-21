@@ -1,5 +1,7 @@
 #pragma once
 
+#include "engine/sdl-attributes.hpp"
+
 #include <SDL3/SDL.h>
 #include <expected>
 #include <memory>
@@ -20,9 +22,8 @@ private:
       -> std::expected<SDL_Window *, std::string>;
   auto createGLContext() noexcept 
     -> std::expected<void, std::string>;
-  auto setGLAttributes(
-      std::span<const std::pair<SDL_GLAttr, std::int32_t>> attrib_list) const noexcept -> void;
-
+  
+  Engine::Attributes attributes{};
   std::unique_ptr<SDL_GLContextState, decltype(&SDL_GL_DestroyContext)>
       context_{nullptr, &SDL_GL_DestroyContext};
   std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window_instance_{
