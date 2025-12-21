@@ -6,26 +6,19 @@
 #include <print>
 
 Engine::Window::Window(std::pair<std::int32_t, std::int32_t> dimensions)
-    : screen_dimensions_{dimensions} {
-  for (const auto &[attribute, value] : ::SDL::ATTRIB_LIST) {
-    SDL_GL_SetAttribute(attribute, value);
-    std::println("Attribute: {0}, Value: {1}.", static_cast<int>(attribute),
-                 value);
-  }
+    : screen_dimensions_{dimensions} 
+{
+  setGLAttributes(SDL::ATTRIB_LIST);
 
   const auto window_result = createWindow();
-  if (!window_result.has_value()) {
+  if (!window_result.has_value())
     throw std::runtime_error(window_result.error());
-  } else {
+  else 
     window_instance_.reset(window_result.value());
-  }
-
-  context_.reset(SDL_GL_CreateContext(window_instance_.get()));
-  assert(context_ != nullptr);
-
-  if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
-    throw std::runtime_error("Failed to load GLAD!");
-  }
+  
+  const auto context_result = createGLContext();
+  if (!context_result.has_value())
+    throw std::runtime_error(context_result.error());
 }
 
 auto Engine::Window::ptr() const noexcept -> SDL_Window * {
@@ -55,4 +48,30 @@ auto Engine::Window::createWindow() const noexcept
 
   assert(result != nullptr);
   return result;
+}
+
+auto Engine::Window::createGLContext() noexcept -> std::expected<void, std::string>
+{
+  context_.reset(SDL_GL_CreateContext(window_instance_.get()));
+  if (context_ == nullptr)
+    return std::unexpected(std::format("Failed to create context! Is Nullptr!"));
+
+  if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
+    return std::unexpected(std::format("Failed to load GLAD"));
+  }
+  
+  return {};
+}
+
+auto Engine::Window::setGLAttributes(
+    std::span<const std::pair<SDL_GLAttr, std::int32_t>> attrib_list) const noexcept -> void
+{
+  assert(attrib_list.data() != nullptr);
+
+  for (const auto &[attribute, value] : attrib_list) 
+  {
+    SDL_GL_SetAttribute(attribute, value);
+    std::println("Attribute: {0}, Value: {1}.", static_cast<int>(attribute),
+                 value);
+  }
 }

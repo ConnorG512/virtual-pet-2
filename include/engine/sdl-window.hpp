@@ -18,6 +18,10 @@ public:
 private:
   auto createWindow() const noexcept
       -> std::expected<SDL_Window *, std::string>;
+  auto createGLContext() noexcept 
+    -> std::expected<void, std::string>;
+  auto setGLAttributes(
+      std::span<const std::pair<SDL_GLAttr, std::int32_t>> attrib_list) const noexcept -> void;
 
   std::unique_ptr<SDL_GLContextState, decltype(&SDL_GL_DestroyContext)>
       context_{nullptr, &SDL_GL_DestroyContext};
