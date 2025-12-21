@@ -8,8 +8,6 @@
 Engine::Window::Window(std::pair<std::int32_t, std::int32_t> dimensions)
     : screen_dimensions_{dimensions} 
 {
-  setGLAttributes(SDL::ATTRIB_LIST);
-
   const auto window_result = createWindow();
   if (!window_result.has_value())
     throw std::runtime_error(window_result.error());
@@ -61,17 +59,4 @@ auto Engine::Window::createGLContext() noexcept -> std::expected<void, std::stri
   }
   
   return {};
-}
-
-auto Engine::Window::setGLAttributes(
-    std::span<const std::pair<SDL_GLAttr, std::int32_t>> attrib_list) const noexcept -> void
-{
-  assert(attrib_list.data() != nullptr);
-
-  for (const auto &[attribute, value] : attrib_list) 
-  {
-    SDL_GL_SetAttribute(attribute, value);
-    std::println("Attribute: {0}, Value: {1}.", static_cast<int>(attribute),
-                 value);
-  }
 }
