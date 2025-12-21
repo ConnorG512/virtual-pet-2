@@ -15,6 +15,7 @@ set(SOURCE_FILES
   src/engine/file-object.cpp
   src/engine/image.cpp
   src/engine/opengl/render.cpp
+  src/engine/event-handler.cpp
   src/engine/user-input.cpp
   src/gameplay/init-game.cpp
   src/gameplay/statistic.cpp
