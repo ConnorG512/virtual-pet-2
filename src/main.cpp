@@ -5,8 +5,10 @@
 #include "engine/primitive-shapes.hpp"
 #include "engine/sdl-window.hpp"
 #include "engine/opengl/render.hpp"
-#include "engine/user-input.hpp"
+#include "engine/event-handler.hpp"
 #include "gameplay/init-game.hpp"
+#include "engine/event-handler.hpp"
+
 
 #include <SDL3/SDL_messagebox.h>
 #include <SDL3/SDL_surface.h>
@@ -15,8 +17,7 @@
 #include <print>
 
 auto main() -> int {
-  SDL_Event event{};
-  Engine::InputHandler input_handler(event);
+  Engine::EventHandler event_handler{};
 
   Engine::Window current_window{};
   glViewport(0, 0, current_window.getCurrentDimensions().first,
@@ -56,22 +57,11 @@ auto main() -> int {
                         (void *)(3 * sizeof(float)));
   glEnableVertexAttribArray(1);
   glBindVertexArray(0);
-
-  bool is_running{true};
-  while (is_running) {
-    while (SDL_PollEvent(&event)) {
-      if (event.type == SDL_EVENT_QUIT)
-        is_running = false;
-      else if (event.type == SDL_EVENT_KEY_DOWN) {
-        input_handler.performKeyPress();
-      }
-      else if (event.type == SDL_EVENT_WINDOW_RESIZED) {
-        int w{0};
-        int h{0};
-        SDL_GetWindowSize(current_window.ptr(), &w, &h);
-        glViewport(0, 0, w, h);
-      }
-    }
+  
+  Engine::EventHandler events {};
+  if(events.event_loop())
+  {
+    events.NewWindowDimensions(current_window.ptr());
 
     // Main Loop.
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
