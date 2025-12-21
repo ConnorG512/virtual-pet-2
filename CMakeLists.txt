@@ -12,6 +12,7 @@ set(EXECUTABLE_NAME virtualpet2)
 set(SOURCE_FILES
   src/main.cpp
   src/engine/sdl-window.cpp
+  src/engine/sdl-attributes.cpp
   src/engine/file-object.cpp
   src/engine/image.cpp
   src/engine/opengl/render.cpp
