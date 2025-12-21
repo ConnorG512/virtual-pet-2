@@ -68,7 +68,7 @@ auto Gameplay::Init::loop() noexcept -> void
 {
   while(event_handler_.event_loop())
   {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     SDL_GL_SwapWindow(game_window_.ptr());
   }

@@ -5,15 +5,12 @@
 
 auto Engine::EventHandler::event_loop() noexcept -> bool
 {
-  while(running_ == true)
+  while(SDL_PollEvent(&event_))
   {
-    while(SDL_PollEvent(&event_))
+    if(event_.type == SDL_EVENT_QUIT)
     {
-      if(event_.type == SDL_EVENT_QUIT)
-      {
-        running_ = false;
-        return running_;
-      }
+      running_ = false;
+      return running_;
     }
   }
   return running_;

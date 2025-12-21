@@ -8,15 +8,6 @@
 Engine::Window::Window(std::pair<std::int32_t, std::int32_t> dimensions)
     : screen_dimensions_{dimensions} 
 {
-  const auto window_result = createWindow();
-  if (!window_result.has_value())
-    throw std::runtime_error(window_result.error());
-  else 
-    window_instance_.reset(window_result.value());
-  
-  const auto context_result = createGLContext();
-  if (!context_result.has_value())
-    throw std::runtime_error(context_result.error());
 }
 
 auto Engine::Window::ptr() const noexcept -> SDL_Window * {
@@ -31,20 +22,5 @@ auto Engine::Window::resetDimentions() const noexcept -> void {
 auto Engine::Window::getCurrentDimensions() const noexcept
     -> std::pair<std::int32_t, std::int32_t> {
   return screen_dimensions_;
-}
-
-auto Engine::Window::createWindow() const noexcept
-    -> std::expected<SDL_Window *, std::string> {
-  const auto [width, height] = screen_dimensions_;
-
-  const auto result{SDL_CreateWindow("Virtual Pet 2", width, height,
-                                     SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE)};
-  if (result == nullptr) {
-    return std::unexpected(
-        std::format("Failed to created SDL Window! Error: {}", SDL_GetError()));
-  }
-
-  assert(result != nullptr);
-  return result;
 }
 
