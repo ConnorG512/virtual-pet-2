@@ -6,6 +6,7 @@
 #include "engine/sdl-window.hpp"
 #include "engine/opengl/render.hpp"
 #include "engine/user-input.hpp"
+#include "gameplay/init-game.hpp"
 
 #include <SDL3/SDL_messagebox.h>
 #include <SDL3/SDL_surface.h>
