@@ -15,6 +15,7 @@ set(SOURCE_FILES
   src/engine/file-object.cpp
   src/engine/image.cpp
   src/engine/opengl/render.cpp
+  src/engine/user-input.cpp
   src/gameplay/statistic.cpp
   src/gameplay/pet.cpp
   src/gameplay/tick-manager.cpp

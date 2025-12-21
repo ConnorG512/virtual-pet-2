@@ -5,6 +5,7 @@
 #include "engine/primitive-shapes.hpp"
 #include "engine/sdl-window.hpp"
 #include "engine/opengl/render.hpp"
+#include "engine/user-input.hpp"
 
 #include <SDL3/SDL_messagebox.h>
 #include <SDL3/SDL_surface.h>
@@ -13,7 +14,10 @@
 #include <print>
 
 auto main() -> int {
-  Engine::SDL::Window current_window{};
+  SDL_Event event{};
+  Engine::InputHandler input_handler(event);
+
+  Engine::Window current_window{};
   glViewport(0, 0, current_window.getCurrentDimensions().first,
              current_window.getCurrentDimensions().second);
   
@@ -54,15 +58,11 @@ auto main() -> int {
 
   bool is_running{true};
   while (is_running) {
-    SDL_Event event{};
     while (SDL_PollEvent(&event)) {
       if (event.type == SDL_EVENT_QUIT)
         is_running = false;
       else if (event.type == SDL_EVENT_KEY_DOWN) {
-        if (event.key.scancode == SDL_SCANCODE_F10)
-        {
-          current_window.resetDimentions();
-        }
+        input_handler.performKeyPress();
       }
       else if (event.type == SDL_EVENT_WINDOW_RESIZED) {
         int w{0};
