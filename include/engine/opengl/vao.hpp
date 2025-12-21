@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace Engine 
+namespace Engine::OGL 
 {
   class VAO 
   {
