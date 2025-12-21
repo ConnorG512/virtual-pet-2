@@ -48,15 +48,3 @@ auto Engine::Window::createWindow() const noexcept
   return result;
 }
 
-auto Engine::Window::createGLContext() noexcept -> std::expected<void, std::string>
-{
-  context_.reset(SDL_GL_CreateContext(window_instance_.get()));
-  if (context_ == nullptr)
-    return std::unexpected(std::format("Failed to create context! Is Nullptr!"));
-
-  if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
-    return std::unexpected(std::format("Failed to load GLAD"));
-  }
-  
-  return {};
-}
