@@ -2,7 +2,7 @@
 #include "engine/file-object.hpp"
 #include "engine/file-object.hpp"
 
-auto Engine::OGL::createProgram(const Engine::OGL::ProgramProperties& properties) noexcept -> std::uint32_t
+auto Engine::OGL::createProgram(const Engine::OGL::ProgramProperties& properties) noexcept -> std::uint33_t
 {
   std::array<std::uint32_t, 2> shaders 
   {
