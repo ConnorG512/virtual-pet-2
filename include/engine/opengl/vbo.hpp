@@ -9,10 +9,11 @@
 
 namespace Engine::OGL 
 {
+  template <typename BufferType>
   class VBO 
   {
     public:
-      VBO(std::span<const Engine::OGL::BufferType> vertex_buffer)
+      VBO(std::span<const BufferType> vertex_buffer)
       {
         bindAndGenVbo();
         createBuffer(vertex_buffer);
@@ -30,7 +31,7 @@ namespace Engine::OGL
         glGenBuffers(1, &vbo_);
       }
 
-      auto createBuffer(std::span<const Engine::OGL::BufferTypee> vertex_buffer) noexcept -> void
+      auto createBuffer(std::span<const BufferType> vertex_buffer) noexcept -> void
       {
         assert(vertex_buffer.data() != nullptr);
         glBufferData(GL_ARRAY_BUFFER,
