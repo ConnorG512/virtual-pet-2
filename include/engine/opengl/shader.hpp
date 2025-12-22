@@ -32,6 +32,11 @@ class Shader
           );
     }
 
+    auto getID() const noexcept -> std::uint32_t 
+    {
+      return id_;
+    }
+
   private:
     auto loadFile(const char* file_path) const noexcept -> std::span<const GLchar> 
     {
