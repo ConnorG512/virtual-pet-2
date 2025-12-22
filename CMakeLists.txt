@@ -18,7 +18,7 @@ set(SOURCE_FILES
   src/engine/image.cpp
   src/engine/opengl/render.cpp
   src/engine/opengl/vao.cpp
-  src/engine/opengl/render-target.cpp
+  src/engine/opengl/shader-program.cpp
   src/engine/event-handler.cpp
   src/engine/user-input.cpp
   src/gameplay/init-game.cpp
