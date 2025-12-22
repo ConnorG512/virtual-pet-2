@@ -15,10 +15,11 @@ class Shader
 {
   public: 
     explicit Shader(const char* file_path)
-      : shader_source_{loadFile(file_path)} 
-      , id_{createShader()}
+      : id_{createShader()}
     {
-      const GLchar* shader_source_ptr {shader_source_.data()};
+      const std::span<const GLchar>shader_source {loadFile(file_path)};
+      const GLchar* shader_source_ptr {shader_source.data()};
+      const GLint shader_source_size {static_cast<GLint>(shader_source.size())};
       
       if(id_ == 0)
         throw std::runtime_error("Failed to create shader!");
@@ -27,7 +28,7 @@ class Shader
             id_,
             1,
             &shader_source_ptr,
-            nullptr
+            &shader_source_size
           );
     }
 
@@ -52,7 +53,6 @@ class Shader
         return glCreateShader(GL_FRAGMENT_SHADER);
     }
 
-    std::span<const GLchar> shader_source_ {};
     std::uint32_t id_{};
 };
 }
