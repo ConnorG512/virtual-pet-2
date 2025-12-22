@@ -5,6 +5,7 @@
 #include "engine/opengl/gl-types.hpp"
 #include "engine/primitive-shapes.hpp"
 #include "engine/opengl/shader.hpp"
+#include "engine/opengl/shader-program.hpp"
 
 namespace Engine::OGL
 {
@@ -19,5 +20,8 @@ class RenderTarget
     VAO vao_instance{};
     Shader<Engine::OGL::Vertex> vertex_shader{"src/shaders/default.vert"};
     Shader<Engine::OGL::Fragment> fragment_shader{"src/shaders/default.frag"};
+    ShaderProgram program_{
+      {vertex_shader.getID(), fragment_shader.getID()}
+    };
 };
 }
