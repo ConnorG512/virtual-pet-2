@@ -10,9 +10,6 @@ namespace Gameplay
 class Init
 {
   public: 
-    Init();
-    ~Init() = default;
-
     auto loop() noexcept -> void;
 
   private:

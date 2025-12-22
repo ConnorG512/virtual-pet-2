@@ -6,10 +6,6 @@
 
 #include <print>
 
-Gameplay::Init::Init()
-{
-}
-
 // Init
 //  glViewport(0, 0, game_window_.getCurrentDimensions().first,
 //             game_window_.getCurrentDimensions().second);
