@@ -65,7 +65,7 @@ auto Gameplay::Init::loop() noexcept -> void
   while(event_handler_.event_loop())
   {
     Engine::OGL::clearScreen(0.1f, 0.1f, 0.1f);
-    render_target.draw();
+    render_target.draw(6);
     SDL_GL_SwapWindow(game_window_.ptr());
   }
 }

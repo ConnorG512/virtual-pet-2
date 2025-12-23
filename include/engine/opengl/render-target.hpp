@@ -16,11 +16,18 @@ class RenderTarget
   public: 
     RenderTarget() = default;
 
-    auto draw() const noexcept -> void 
+    auto draw(
+        GLsizei vertex_num, 
+        GLenum draw_mode = GL_TRIANGLES, 
+        GLint first_element_pos = 0) const noexcept -> void 
     {
       glUseProgram(program_.getID());
       glBindVertexArray(vao_instance.get());
-      glDrawArrays(GL_TRIANGLES, 0, 6);
+      glDrawArrays(
+          draw_mode, 
+          first_element_pos, 
+          vertex_num
+      );
     }
 
   private:
