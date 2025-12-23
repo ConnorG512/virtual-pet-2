@@ -6,10 +6,6 @@
 
 #include <print>
 
-Gameplay::Init::Init()
-{
-}
-
 // Init
 //  glViewport(0, 0, game_window_.getCurrentDimensions().first,
 //             game_window_.getCurrentDimensions().second);
@@ -68,8 +64,8 @@ auto Gameplay::Init::loop() noexcept -> void
 {
   while(event_handler_.event_loop())
   {
-    glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    Engine::OGL::clearScreen(0.1f, 0.1f, 0.1f);
+    render_target.draw();
     SDL_GL_SwapWindow(game_window_.ptr());
   }
 }

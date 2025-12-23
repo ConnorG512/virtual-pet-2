@@ -9,8 +9,7 @@ auto Engine::EventHandler::event_loop() noexcept -> bool
   {
     if(event_.type == SDL_EVENT_QUIT)
     {
-      running_ = false;
-      return running_;
+      running_ = false; return running_;
     }
   }
   return running_;
