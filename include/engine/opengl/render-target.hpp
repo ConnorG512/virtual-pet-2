@@ -22,6 +22,8 @@ class RenderTarget
         GLint first_element_pos = 0) const noexcept -> void 
     {
       glUseProgram(program_.getID());
+      glActiveTexture(GL_TEXTURE0);
+      glBindTexture(GL_TEXTURE_2D, );
       glBindVertexArray(vao_instance.get());
       glDrawArrays(
           draw_mode, 
