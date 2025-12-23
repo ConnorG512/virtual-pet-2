@@ -9,6 +9,7 @@ class ShaderProgram
 {
   public:
     ShaderProgram(std::vector<std::uint32_t> shaders);
+    auto getID() const noexcept -> std::uint32_t;
 
   private:
 

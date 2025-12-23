@@ -12,6 +12,11 @@ Engine::OGL::ShaderProgram::ShaderProgram(std::vector<std::uint32_t> shaders)
   deleteShaders(shaders);
 }
 
+auto Engine::OGL::ShaderProgram::getID() const noexcept -> std::uint32_t
+{
+  return id_;
+}
+
 auto Engine::OGL::ShaderProgram::compileShaders(std::vector<std::uint32_t> shaders) const noexcept -> void
 {
   for (const auto shader : shaders)
