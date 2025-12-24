@@ -6,6 +6,7 @@
 #include "engine/primitive-shapes.hpp"
 #include "engine/opengl/shader.hpp"
 #include "engine/opengl/shader-program.hpp"
+#include "engine/opengl/gl-texture.hpp"
 #include "glad/glad.h"
 
 namespace Engine::OGL
@@ -22,8 +23,7 @@ class RenderTarget
         GLint first_element_pos = 0) const noexcept -> void 
     {
       glUseProgram(program_.getID());
-      glActiveTexture(GL_TEXTURE0);
-      glBindTexture(GL_TEXTURE_2D, );
+      texture_instance.bindTextureToTarget();
       glBindVertexArray(vao_instance.get());
       glDrawArrays(
           draw_mode, 
@@ -37,6 +37,7 @@ class RenderTarget
     VAO vao_instance{};
     Shader<Engine::OGL::Vertex> vertex_shader{"src/shaders/default.vert"};
     Shader<Engine::OGL::Fragment> fragment_shader{"src/shaders/default.frag"};
+    Texture texture_instance{};
     ShaderProgram program_{
       {vertex_shader.getID(), fragment_shader.getID()}
     };
